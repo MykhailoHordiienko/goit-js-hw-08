@@ -18,8 +18,12 @@ player.on('timeupdate', throttledPlayedTime);
 
 const currentTime = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-player.setCurrentTime(currentTime);
+// player.setCurrentTime(currentTime);
 
-// player.getVideoTitle().then(function (title) {
-//   console.log('title:', title);
-// });
+player.setCurrentTime(currentTime).catch(function (error) {
+  switch (error.name) {
+    case 'RangeError':
+      // the time was less than 0 or greater than the video’s duration
+      break;
+  }
+});
